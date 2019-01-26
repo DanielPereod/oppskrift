@@ -1,0 +1,111 @@
+body{
+    font-family: 'Montserrat', sans-serif;
+    color: #142535;
+    background-color: #fff; 
+    font-size: 13px;
+    height: 100vh;
+}
+
+nav{
+    font-weight: 500;
+    box-shadow: none !important;
+}
+nav .nav-title{
+    font-weight: 700;
+    font-size: 25px;
+}
+.login{
+    color: #2DD393 !important;
+}
+
+.form-header{
+    font-weight: 700;
+    font-size: 42px;
+    text-align: center;
+}
+.form-description{
+    text-align: center;
+}
+.form-description p{
+    color: #888888;
+    font-weight: 500;
+}
+
+.input{
+    background-color: #F2F2F2;
+    border: none;
+    outline: none;
+    height: 50px;
+}
+.input:focus{
+    outline: none;
+    box-shadow: 0px 0px 0px 3.2px rgba(45, 211, 147, 0.288);
+}
+.button-login{
+    cursor: pointer;
+    width: 100%;
+    height: 60px;
+    font-family: inherit;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: #fff;
+    background-color: #2DD393;
+    border-radius: 10px;
+    outline: 0;
+    border: none;
+    box-shadow: 0px 13px 38px rgba(0, 0, 0, 0.16);
+    transition:  background-color 0.4s;
+}
+.button-login:hover{
+    background-color: rgb(38, 182, 127);
+}
+.button-login:active{
+    background-color: rgb(35, 165, 115);
+    outline: 0;
+}
+.checkbox{
+    appearance: none;
+    -webkit-appearance: none;
+    border: 1px solid #142535;
+    width: 13px;
+    height: 13px;
+    border-radius: 20px;
+    box-shadow: none;
+    outline: none;
+}
+.checkbox:checked{
+    box-shadow: none;
+    outline: none;
+    background: #142535;
+}
+
+.green-link{
+    color: #2DD393;
+    text-decoration: none;
+    transition: border 0.4s;
+}
+.green-link:hover{
+    color: #2DD393;
+    border-bottom: 1px solid #2DD393;
+    text-decoration: none;
+}
+
+.full-screen{
+    height: 100vh;
+}
+
+
+/* ASSETS */
+
+.main-title{
+    font-size: 30px;
+    color: #142535;
+    font-weight: 700;
+}
+.second-title{
+    font-size: 24px;
+    color: #142535;
+    font-weight: 700;
+    text-transform: capitalize;
+}
