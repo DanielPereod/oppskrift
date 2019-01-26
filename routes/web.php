@@ -17,7 +17,8 @@ Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
 
 Route::group(['prefix'=>'recipe'], function(){
-    Route::get('/recipes','RecipeController@index')->name('index');
+    Route::get('/','RecipeController@index')->name('index');
     Route::get('/create', 'RecipeController@create')->name('create');
     Route::post('/save', 'RecipeController@save')->name('save');
+    Route::get('/show', 'RecipeController@show')->name('show');
 });

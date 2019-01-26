@@ -108,4 +108,44 @@ nav .nav-title{
     color: #142535;
     font-weight: 700;
     text-transform: capitalize;
+    letter-spacing: 2px;
+}
+a:hover{
+    text-decoration-color: #2DD393;
+}
+
+/* RECIPE */
+.recipes .recipe-title{
+    padding-top: 10px;
+    height: 50px;
+}
+.recipes .recipe-thumb img{
+    object-fit: cover;
+    height: 300px;
+    width: 100%;
+    border-radius: 4px;
+}
+
+.recipes a:hover img{
+    transition: filter 0.2s;
+}
+
+
+.recipes a:hover img{
+    filter: grayscale(0.7);
+}
+
+.pagination>li>a,
+.pagination>li>span {
+  color: #2DD393;
+}
+.page-item.active .page-link {
+  background-color: #2DD393;
+  color: #fff;
+  border: #2DD393;
+}
+
+.steps ul{
+    list-style: none;
+    padding: 0;
 }

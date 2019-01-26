@@ -16,9 +16,11 @@ class RecipeController extends Controller
 
     //Funcion principal de las recetas en las que se muestran todas
     public function index(){
-        $recipes = Recipe::orderBY('id')->get();
+        $recipes = Recipe::orderBY('id')->paginate(15);
 
-        return view('recipe.index', ['recipes' => $recipes]);
+        $file = Storage::url('recipe_images'); ;
+
+        return view('recipe.index', ['recipes' => $recipes, 'file' => $file]);
     }
 
     //Funcion que devuelve la vista del formulario para crear recetas
@@ -53,7 +55,7 @@ class RecipeController extends Controller
         $recipe->category_id = $category;
 
         $image_path_name = time().$image_path->getClientOriginalName();
-        Storage::disk('recipe_images')->put($image_path_name, File::get($image_path));
+        Storage::disk('public')->put($image_path_name, File::get($image_path));
         $recipe->image_path = $image_path_name;
 
         $recipe->user_id = $user->id;
@@ -69,7 +71,13 @@ class RecipeController extends Controller
     }
 
     public function getImage($filename){
-        $file = Storage::disk('recipe_images')->get($filename);
+        $file = Storage::disk('public')->get($filename);
         return new Response($file, 200);
+    }
+
+    public function show(Request $req){
+        $id = $req->get('id');
+        $recipe = Recipe::where("id", $id)->first();
+        return view('recipe.show', ['recipe'=>$recipe]);
     }
 }

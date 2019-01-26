@@ -23,7 +23,7 @@
 <body>
     <div class="container">
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel px-0">
+        <nav class="navbar navbar-expand-md navbar-light navbar-laravel px-0 pb-4">
 
                 <a class="navbar-brand nav-title" href="{{ url('/') }}">
                     {{ config('app.name', 'OPPSKRIFT') }}
