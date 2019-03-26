@@ -14,6 +14,32 @@ nav .nav-title{
     font-weight: 700;
     font-size: 25px;
 }
+
+.btn{
+    padding: 10px;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: #fff;
+    background-color: #2DD393;
+    border-radius: 10px;
+    outline: 0;
+    border: none;
+    box-shadow: 0px 13px 38px rgba(0, 0, 0, 0.16);
+}
+.btn:hover{
+    color: #fff;
+    background-color: rgb(40, 179, 125);
+}
+.danger{
+    background-color: #d63030;
+}
+.danger:hover{
+    background-color: #ac2626;
+}
+
 .login{
     color: #2DD393 !important;
 }
@@ -114,7 +140,7 @@ a:hover{
     text-decoration-color: #2DD393;
 }
 
-/* RECIPE */
+/* SHOW VIEW */
 .recipes .recipe-title{
     padding-top: 10px;
     height: 50px;
@@ -148,4 +174,23 @@ a:hover{
 .steps ul{
     list-style: none;
     padding: 0;
+}
+.add-icon{
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #2DD393;
+    text-align: center;
+    border-radius: 10px;
+}
+
+
+#ingredients input,
+#steps textarea{
+    margin: 5px 0;
+}
+
+
+/* EDIT VIEW */
+.image-edit-view{
+    width: 20%;
 }

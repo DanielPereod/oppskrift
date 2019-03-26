@@ -19,6 +19,9 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::group(['prefix'=>'recipe'], function(){
     Route::get('/','RecipeController@index')->name('index');
     Route::get('/create', 'RecipeController@create')->name('create');
-    Route::post('/save', 'RecipeController@save')->name('save');
+    Route::post('/create', 'RecipeController@save')->name('save');
     Route::get('/show', 'RecipeController@show')->name('show');
+    Route::get('/edit/{id}', 'RecipeController@getById')->name('edit');
+    Route::post('/edit/{id}', 'RecipeController@edit')->name('editsave');
+    Route::get('/delete/{id}', 'RecipeController@delete')->name('delete');
 });

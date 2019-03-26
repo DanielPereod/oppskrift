@@ -5,7 +5,7 @@
 <div class="alert alert-danger">
     <ul>
         @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
+        <li>{{ $error }}</li>
         @endforeach
     </ul>
 </div>
@@ -15,35 +15,20 @@
     @csrf
     <div class="form-group">
         <label for="title">Titulo</label>
-        <input class="form-control" type="text" name="title"/>
+        <input class="form-control" type="text" name="title" />
     </div>
     {{-- TODO: CREAR NUEVOS CON JAVASCRIPT --}}
-    <div class="form-group">
+    <div class="form-group" id="ingredients">
         <label for="ingredient">Ingrediente</label>
-        <input class="form-control" type="text" name="ingredient[]"/>
+        <input class="form-control" type="text" name="ingredient[]" placeholder="Escribe un ingrediente..." />
     </div>
+    <div class="add-icon" id="add-ingredient">Añadir Ingrediente +</div>
 
-    <div class="form-group">
-            <label for="ingredient">Ingrediente</label>
-            <input class="form-control" type="text" name="ingredient[]"/>
-    </div>
-
-    <div class="form-group">
-        <label for="ingredient">Ingrediente</label>
-        <input class="form-control" type="text" name="ingredient[]"/>
-    </div>
-
-    <div class="form-group">
+    <div class="form-group" id="steps">
         <label for="description">Preparacion</label>
-        <input class="form-control" type="text" name="description[]"/>
-    </div>
-
-    <div class="form-group">
-        <label for="description">Preparacion</label>
-        <input class="form-control" type="text" name="description[]"/>
-    </div>
-
-    {{-- TODO: ELEMINAR ELEMENTOS TEMPORALES --}}
+        <textarea class="form-control" type="text" name="description[]" placeholder="Escribe el paso 1..." ></textarea>
+    </div> 
+    <div class="add-icon" id="add-step">Añadir paso +</div>
 
     <div class="form-group">
         <label for="description">Preparacion</label>

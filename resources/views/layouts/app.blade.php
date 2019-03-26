@@ -11,6 +11,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/main.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -41,10 +42,10 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                             <li class="nav-item mr-3">
-                                <a class="nav-link" href="">DESCUBRE</a>
+                                <a class="nav-link" href="{{url('recipe')}}">DESCUBRE</a>
                             </li>
                             <li class="nav-item mr-3">
-                                <a class="nav-link" href="">CREA</a>
+                                <a class="nav-link" href="{{url('recipe/create')}}">CREA</a>
                             </li class="nav-item">
                             <li class="nav-item mr-4"> 
                                 <a class="nav-link" href="">CATEGORIAS</a>
@@ -76,6 +77,17 @@
                     </ul>
                 </div>
         </nav>
+        @if (session('message'))
+            <div class="alert alert-success" role="alert">
+                <span>{{ session('message') }}</span>
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="alert alert-danger" role="alert">
+                <span>{{ session('error') }}</span>
+            </div>
+        @endif
 
         <main class="py-4">
             @yield('content')

@@ -32,11 +32,11 @@
                     <ul>
                         <li>
                             @if (json_decode($recipe->info)[0] == 1)
-                                Facil
+                                Difícil
                             @elseif(json_decode($recipe->info)[0] == 2)
                                 Media
                             @elseif(json_decode($recipe->info)[0] == 3)
-                                Dificil
+                                Fácil
                             @endif
                         <li>Comensales: {{json_decode($recipe->info)[1]}}</li>
                         <li>Tiempo: {{json_decode($recipe->info)[2]}}min</li>
@@ -52,6 +52,13 @@
                 <li class="list-group-item"><span class="second-title">{{$i+1}}.</span>{{json_decode($recipe->description)[$i]}}</li>
             @endfor
         </ul>
+    </div>
+    <div class="col-md-6">
+        @if ($recipe->user_id == auth()->user()->id)
+            <a class="btn" href="{{url('recipe/edit/'.$recipe->id)}}">Editar</a>
+            <a class="btn danger" href="{{url('recipe/delete/'.$recipe->id)}}">Borrar</a> 
+        @endif
+
     </div>
 </div>
 @endsection

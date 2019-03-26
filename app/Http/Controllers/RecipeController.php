@@ -54,19 +54,65 @@ class RecipeController extends Controller
         $recipe->description = json_encode($description);
         $recipe->category_id = $category;
 
-        $image_path_name = time().$image_path->getClientOriginalName();
-        Storage::disk('public')->put($image_path_name, File::get($image_path));
-        $recipe->image_path = $image_path_name;
+        if ($image_path) {
+            $image_path_name = time().$image_path->getClientOriginalName();
+            Storage::disk('public')->put($image_path_name, File::get($image_path));
+            $recipe->image_path = $image_path_name;
+        }
+
+
 
         $recipe->user_id = $user->id;
         $recipe->info = json_encode($info);
-
-
 
         $recipe->save();
 
         return redirect()->route('home')->with([
             'message' => 'Receta subida con exito'
+        ]);
+    }
+
+    public function edit(Request $request, $id){
+        $recipeDB = Recipe::where("id", $id)->first();
+        if ($recipeDB->user_id == auth()->user()->id) {
+            $validate = $this->validate($request,[
+                'title' => 'required|max:255',
+                'ingredient' => 'required|array',
+                'description' => 'required|array',
+                'category' => 'required|numeric',
+                'image' => 'image',
+                'info' => 'required|array',
+            ]);
+
+
+            $title = $request->input('title');
+            $ingredient = $request->input('ingredient');
+            $description = $request->input('description');
+            $category = $request->input('category');
+            $image_path = $request->file('image');
+            $info = $request->input('info');
+
+            $recipe = Recipe::find($id);
+
+            $recipe->title = $title;
+            $recipe->ingredients = json_encode($ingredient);
+            $recipe->description = json_encode($description);
+            $recipe->category_id = $category;
+
+            if ($image_path) {
+                $image_path_name = time().$image_path->getClientOriginalName();
+                Storage::disk('public')->put($image_path_name, File::get($image_path));
+                $recipe->image_path = $image_path_name;
+            }
+
+            $recipe->info = json_encode($info);
+
+
+            $recipe->save();
+        }
+
+        return redirect()->route('home')->with([
+            'message' => 'Receta ectualizada con exito'
         ]);
     }
 
@@ -78,6 +124,32 @@ class RecipeController extends Controller
     public function show(Request $req){
         $id = $req->get('id');
         $recipe = Recipe::where("id", $id)->first();
+        
         return view('recipe.show', ['recipe'=>$recipe]);
+    }
+
+    public function getById($id){
+        $recipeDB = Recipe::where("id", $id)->first();
+        if ($recipeDB->user_id == auth()->user()->id) {
+            $recipe = Recipe::where("id", $id)->first();
+            return view('recipe.edit', ['recipe'=>$recipe]);
+        }
+        return redirect()->route('index')->with([
+            'error' => 'La receta que intentas editar no es tuya'
+        ]);
+    }
+
+    public function delete($id){
+        $recipe = Recipe::where("id", $id)->first();
+        if ($recipe->user_id == auth()->user()->id) {
+            $recipe->delete();
+            return redirect()->route('home')->with([
+                'message' => 'Receta borrada con exito'
+            ]);
+        }
+        return redirect()->route('home')->with([
+            'error' => 'La receta que intentas borrar no es tuya'
+        ]);
+
     }
 }
