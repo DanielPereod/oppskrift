@@ -39,8 +39,14 @@
     <div class="form-group">
         <label for="description">Preparacion</label>
         <select class="form-control" name="category">
-            {{-- TODO: CAMBIAR POR LAS CATEGORIAS DE LA BASE DE DATOS --}}
-            <option value="1">Categoria1</option>
+            @foreach ($categories as $category)
+                @if ($recipe->category_id == $category->id)
+                    <option value="{{$category->id}}" selected>{{$category->name}}</option>
+                @else
+                    <option value="{{$category->id}}">{{$category->name}}</option>
+                @endif
+                
+            @endforeach
         </select>
     </div>
 
@@ -55,18 +61,18 @@
         <select class="form-control" name="info[]">
 
             @if(array_values(json_decode($recipe->info, true))[0] == 1)
-            <option value="1">Dificil</option>
-            <option value="3">Facil</option>
-            <option value="2">Media</option>
+                <option value="1" selected>Dificil</option>
+                <option value="2">Media</option>
+                <option value="3">Facil</option>
             
             @elseif(array_values(json_decode($recipe->info, true))[0] == 2)
+                <option value="1" selected>Dificil</option>
                 <option value="2">Media</option>
-                <option value="1">Dificil</option>
                 <option value="3">Facil</option> 
             @elseif(array_values(json_decode($recipe->info, true))[0] == 3)
-                <option value="3">Facil</option> 
-                <option value="2">Media</option>
                 <option value="1">Dificil</option>
+                <option value="2">Media</option>
+                <option value="3" selected>Facil</option> 
             @endif
         </select>
     </div>

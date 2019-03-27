@@ -55,8 +55,8 @@
     </div>
     <div class="col-md-6">
         @if ($recipe->user_id == auth()->user()->id)
-            <a class="btn" href="{{url('recipe/edit/'.$recipe->id)}}">Editar</a>
-            <a class="btn danger" href="{{url('recipe/delete/'.$recipe->id)}}">Borrar</a> 
+            <a class="btn btn-success" href="{{url('recipe/edit/'.$recipe->id)}}">Editar</a>
+            <a class="btn btn-danger" href="{{url('recipe/delete/'.$recipe->id)}}">Borrar</a> 
         @endif
 
     </div>

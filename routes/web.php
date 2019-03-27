@@ -14,7 +14,7 @@
 
 Auth::routes();
 
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/', 'RecipeController@home')->name('home');
 
 Route::group(['prefix'=>'recipe'], function(){
     Route::get('/','RecipeController@index')->name('index');
@@ -24,4 +24,6 @@ Route::group(['prefix'=>'recipe'], function(){
     Route::get('/edit/{id}', 'RecipeController@getById')->name('edit');
     Route::post('/edit/{id}', 'RecipeController@edit')->name('editsave');
     Route::get('/delete/{id}', 'RecipeController@delete')->name('delete');
+    Route::get('/categories', 'RecipeController@showCategories')->name('categories');
+    Route::get('/category/{id}', 'RecipeController@showRecipesByCategory')->name('showbycategory');
 });

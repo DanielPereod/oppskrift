@@ -6,12 +6,25 @@ use Illuminate\Http\Request;
 use App\Recipe;
 use Illuminate\Support\Facades\Storage;
 use File;
+use App\Category;
 
 class RecipeController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
+    }
+
+    public function home(){
+        $bestRecipe = Recipe::where('votes', Recipe::max('votes'))->first();
+        $recipes = Recipe::inRandomOrder()->limit(6)->get();
+        $file = Storage::url('recipe_images'); ;
+
+        return view('home', [
+            'bestRecipe' => $bestRecipe, 
+            'recipes' => $recipes, 
+            'file' => $file
+        ]);
     }
 
     //Funcion principal de las recetas en las que se muestran todas
@@ -132,7 +145,10 @@ class RecipeController extends Controller
         $recipeDB = Recipe::where("id", $id)->first();
         if ($recipeDB->user_id == auth()->user()->id) {
             $recipe = Recipe::where("id", $id)->first();
-            return view('recipe.edit', ['recipe'=>$recipe]);
+            $categories = Category::get();
+            $category = Category::where('id', $recipe->category_id)->first();
+            $recipe->category = $category->name;
+            return view('recipe.edit', ['recipe'=> $recipe, 'categories'=> $categories]);
         }
         return redirect()->route('index')->with([
             'error' => 'La receta que intentas editar no es tuya'
@@ -151,5 +167,19 @@ class RecipeController extends Controller
             'error' => 'La receta que intentas borrar no es tuya'
         ]);
 
+    }
+
+    public function showCategories(){
+        $categories = Category::get();
+
+        return view('recipe.categories', ['categories' => $categories]);
+    }
+
+    public function showRecipesByCategory($id){
+        $recipes = Recipe::orderBY('id')->where('category_id', $id)->paginate(15);
+
+        $file = Storage::url('recipe_images'); ;
+
+        return view('recipe.index', ['recipes' => $recipes, 'file' => $file]);
     }
 }
