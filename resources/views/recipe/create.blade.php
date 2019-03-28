@@ -33,9 +33,10 @@
     <div class="form-group">
         <label for="description">Preparacion</label>
         <select class="form-control" name="category">
-            {{-- TODO: CAMBIAR POR LAS CATEGORIAS DE LA BASE DE DATOS --}}
-            <option value="1">Categoria1</option>
-        </select>
+                @foreach ($categories as $category)
+                    <option value="{{$category->id}}">{{$category->name}}</option> 
+                @endforeach
+            </select>
     </div>
 
     <div class="form-group">

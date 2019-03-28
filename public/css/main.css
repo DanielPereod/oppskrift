@@ -45,8 +45,24 @@ footer{
     border: none;
     box-shadow: 0px 13px 38px rgba(0, 0, 0, 0.16);
 }
+.no-link{
+    text-decoration: none;
+    color: #142535;
+}
+a:hover .no-link{
+    text-decoration: none;
+}
 .mt-10{
     margin-top: 200px;
+}
+.fork{
+    width: 20px;
+}
+.votes{
+    margin-left: 15px;
+    font-size: 30px;
+    color: #2DD393;
+    font-weight: 700;
 }
 .botn:hover{
     color: #fff;

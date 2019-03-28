@@ -17,7 +17,7 @@
         <label for="title">Titulo</label>
         <input class="form-control" type="text" name="title" value="{{$recipe->title}}"/>
     </div>
-    {{-- TODO: CREAR NUEVOS CON JAVASCRIPT --}}
+
     <div class="form-group" id="ingredients">
         <label for="ingredient">Ingrediente</label>
 

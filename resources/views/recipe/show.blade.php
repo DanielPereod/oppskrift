@@ -14,7 +14,10 @@
                     <h2 class="main-title">{{$recipe->title}}</h2>
                 </div>
                 <div class="col-4">
-                    tenedor
+                    <a href="{{url('recipe/vote/'.$recipe->id)}}">
+                        <img class="fork" src="{{asset('/svg/fork.png')}}" alt="votos">
+                    </a>
+                    <span class="votes">{{$recipe->votes}}</span>
                 </div>
             </div>
             <hr class="mt-0">

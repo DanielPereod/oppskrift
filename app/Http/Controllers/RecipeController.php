@@ -28,17 +28,23 @@ class RecipeController extends Controller
     }
 
     //Funcion principal de las recetas en las que se muestran todas
-    public function index(){
-        $recipes = Recipe::orderBY('id')->paginate(15);
+    public function index($by = 'id'){
+        $recipes = Recipe::orderBY($by,'desc')->paginate(15);
 
         $file = Storage::url('recipe_images'); ;
 
-        return view('recipe.index', ['recipes' => $recipes, 'file' => $file]);
+        return view('recipe.index', [
+            'recipes' => $recipes, 
+            'file' => $file, 
+            'url' => 'index',
+            'id' => 0
+        ]);
     }
 
     //Funcion que devuelve la vista del formulario para crear recetas
     public function create(){
-        return view('recipe.create');
+        $categories = Category::get();
+        return view('recipe.create',['categories'=> $categories]);
     }
 
     //Funcion que recoge valida y guarda los datos recogidos del formulario
@@ -175,11 +181,39 @@ class RecipeController extends Controller
         return view('recipe.categories', ['categories' => $categories]);
     }
 
-    public function showRecipesByCategory($id){
-        $recipes = Recipe::orderBY('id')->where('category_id', $id)->paginate(15);
+    public function showRecipesByCategory($id, $by){
+        $recipes = Recipe::orderBY($by, 'desc')->where('category_id', $id)->paginate(15);
 
         $file = Storage::url('recipe_images'); ;
 
-        return view('recipe.index', ['recipes' => $recipes, 'file' => $file]);
+        return view('recipe.index', ['recipes' => $recipes, 'file' => $file, 'url' => 'showbycategory', 'id' => $id]);
+    }
+
+    public function vote($id){
+        $recipe = Recipe::find($id);
+        $user_id = auth()->user()->id;
+
+        if($recipe->votes_user == null){
+            $array = [$user_id];
+    
+        } else {
+            $arrayLenght = count(json_decode($recipe->votes_user));
+            $array = json_decode($recipe->votes_user);
+            array_push($array, $user_id);
+
+            foreach (json_decode($recipe->votes_user) as $user) {
+                if ($user == $user_id) {
+                    return back();
+                }
+            }
+        }
+
+
+        $recipe->votes_user = json_encode($array);
+        $recipe->increment('votes');
+
+        $recipe->save();
+
+        return back();
     }
 }
