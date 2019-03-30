@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Recipe;
+use App\User;
 use Illuminate\Support\Facades\Storage;
 use File;
 use App\Category;
+use App\Comment;
 
 class RecipeController extends Controller
 {
@@ -55,7 +57,7 @@ class RecipeController extends Controller
             'description' => 'required|array',
             'category' => 'required|numeric',
             'image' => 'required|image',
-            'info' => 'required|array',
+            'info.*' => 'required',
         ]);
 
         $title = $request->input('title');
@@ -79,8 +81,6 @@ class RecipeController extends Controller
             $recipe->image_path = $image_path_name;
         }
 
-
-
         $recipe->user_id = $user->id;
         $recipe->info = json_encode($info);
 
@@ -100,7 +100,7 @@ class RecipeController extends Controller
                 'description' => 'required|array',
                 'category' => 'required|numeric',
                 'image' => 'image',
-                'info' => 'required|array',
+                'info*' => 'required',
             ]);
 
 
@@ -143,8 +143,15 @@ class RecipeController extends Controller
     public function show(Request $req){
         $id = $req->get('id');
         $recipe = Recipe::where("id", $id)->first();
-        
-        return view('recipe.show', ['recipe'=>$recipe]);
+        $user = User::where('id', $recipe->user_id)->first();
+
+        $comments = Comment::leftjoin('users', 'comments.user_id', '=', 'users.id')
+                    ->select('comments.*', 'users.name', 'users.id')->where('comments.post_id', $id)->get();
+        return view('recipe.show', [
+            'recipe'=>$recipe,
+            'user'=>$user,
+            'comments'=>$comments
+        ]);
     }
 
     public function getById($id){
@@ -178,7 +185,9 @@ class RecipeController extends Controller
     public function showCategories(){
         $categories = Category::get();
 
-        return view('recipe.categories', ['categories' => $categories]);
+        return view('recipe.categories', [
+            'categories' => $categories
+        ]);
     }
 
     public function showRecipesByCategory($id, $by){
@@ -186,7 +195,11 @@ class RecipeController extends Controller
 
         $file = Storage::url('recipe_images'); ;
 
-        return view('recipe.index', ['recipes' => $recipes, 'file' => $file, 'url' => 'showbycategory', 'id' => $id]);
+        return view('recipe.index', [
+            'recipes' => $recipes, 
+            'file' => $file, 'url' => 
+            'showbycategory', 'id' => $id
+        ]);
     }
 
     public function vote($id){
@@ -208,12 +221,32 @@ class RecipeController extends Controller
             }
         }
 
-
         $recipe->votes_user = json_encode($array);
         $recipe->increment('votes');
 
         $recipe->save();
 
         return back();
+    }
+
+    public function createComment(Request $request, $id){
+        $validate = $this->validate($request,[
+            'comment' => 'required|max:500',
+        ]);
+
+        $description = $request->input('comment');
+
+        $user = \Auth::user();
+        $comment = new Comment();
+
+        $comment->id = null;
+        $comment->user_id = $user->id;
+        $comment->post_id = $id;
+        $comment->description = $description;
+
+        $comment->save();
+
+        return back();
+
     }
 }

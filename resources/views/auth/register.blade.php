@@ -13,7 +13,7 @@
                         </div>
         
                         <div class="form-body">
-                    <form method="POST" action="{{ route('register') }}">
+                    <form method="POST" id="signupForm" action="{{ route('register') }}">
                         @csrf
 
                         <div class="form-group row  justify-content-center">

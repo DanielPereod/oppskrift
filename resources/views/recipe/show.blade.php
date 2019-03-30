@@ -26,7 +26,7 @@
                     <h3 class="second-title">ingredientes</h3>
                     <ul>
                         @foreach (json_decode($recipe->ingredients) as $ingredient)
-                            <li>{{$ingredient}}</li>
+                        <li>{{$ingredient}}</li>
                         @endforeach
                     </ul>
                 </div>
@@ -35,11 +35,11 @@
                     <ul>
                         <li>
                             @if (json_decode($recipe->info)[0] == 1)
-                                Difícil
+                            Difícil
                             @elseif(json_decode($recipe->info)[0] == 2)
-                                Media
+                            Media
                             @elseif(json_decode($recipe->info)[0] == 3)
-                                Fácil
+                            Fácil
                             @endif
                         <li>Comensales: {{json_decode($recipe->info)[1]}}</li>
                         <li>Tiempo: {{json_decode($recipe->info)[2]}}min</li>
@@ -52,16 +52,52 @@
         <h2 class="second-title">Preparacion</h2>
         <ul class="list-group list-group-flush">
             @for ($i = 0; $i < count(json_decode($recipe->description)); $i++)
-                <li class="list-group-item"><span class="second-title">{{$i+1}}.</span>{{json_decode($recipe->description)[$i]}}</li>
-            @endfor
+                <li class="list-group-item"><span
+                        class="second-title">{{$i+1}}.</span>{{json_decode($recipe->description)[$i]}}</li>
+                @endfor
         </ul>
     </div>
-    <div class="col-md-6">
-        @if ($recipe->user_id == auth()->user()->id)
-            <a class="btn btn-success" href="{{url('recipe/edit/'.$recipe->id)}}">Editar</a>
-            <a class="btn btn-danger" href="{{url('recipe/delete/'.$recipe->id)}}">Borrar</a> 
-        @endif
+    <div class="row width100 my-4">
+        <div class="col-md-12 d-flex  justify-content-center">
+            <a class="btn btn-outline-success" href="{{route('user.profile', ['id' => $user->id])}}">Ver mas recetas de
+                {{$user->name}}</a>
+        </div>
+    </div>
 
+    <div class="card width100">
+        @foreach ($comments as $comment)
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-1">
+                    <img src="https://image.ibb.co/jw55Ex/def_face.jpg" class="img img-rounded img-fluid" />
+                    <p class="text-secondary text-center">{{date('d-m-Y', strtotime($comment->created_at))}}</p>
+                </div>
+                <div class="col-md-10">
+                    <p>
+                        <a class="float-left"
+                            href="{{route('user.profile', [$comment->user_id])}}"><strong>{{$comment->name}}</strong></a>
+                    </p>
+                    <div class="clearfix"></div>
+                    <p>{{$comment->description}}</p>
+                </div>
+            </div>
+        </div>
+        @endforeach
+        <div class="card-body">
+            <form action="{{route('comment.create', ['id' => $recipe->id])}}" method="POST">
+                @csrf
+                <textarea onkeyup="countChar(this)" id="field" class="form-control" name="comment" placeholder="Escribe tu comentario..." maxlength="500" required></textarea>
+                <div id="charNum"></div>
+                <button type="submit" class="btn btn-success my-3">Enviar comentario</button>
+            </form>
+        </div>
     </div>
 </div>
+<div class="mt-5">
+    @if ($recipe->user_id == auth()->user()->id)
+    <a class="btn btn-success" href="{{url('recipe/edit/'.$recipe->id)}}">Editar receta</a>
+    <a class="btn btn-danger" href="{{url('recipe/delete/'.$recipe->id)}}">Borrar receta</a>
+    @endif
+</div>
+
 @endsection

@@ -87,7 +87,7 @@
         <input class="form-control" type="text" name="info[]" value="{{array_values(json_decode($recipe->info, true))[2]}}">
     </div>
 
-    <button type="submit">Editar receta</button>
+    <button type="submit" class="btn btn-success">Editar receta</button>
 </form>
 
 
