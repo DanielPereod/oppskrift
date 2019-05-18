@@ -59,8 +59,8 @@
     </div>
     <div class="row width100 my-4">
         <div class="col-md-12 d-flex  justify-content-center">
-            <a class="btn btn-outline-success" href="{{route('user.profile', ['id' => $user->id])}}">Ver mas recetas de
-                {{$user->name}}</a>
+            <a class="btn btn-outline-success mr-2" href="{{route('user.profile', ['id' => $user->id])}}">Ver mas recetas de{{$user->name}}</a>
+            <a class="btn btn-outline-info ml-2" href="{{route('user.favoriteAdd', ['id' => $recipe->id])}}">Guardar en favoritos</a>
         </div>
     </div>
 

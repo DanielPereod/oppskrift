@@ -65,7 +65,7 @@
         <input class="form-control" type="number" id="tiempo" name="info[]" placeholder="Introduce en minutos el tiempo para hacer la receta..." required>
     </div>
 
-    <button class="btn btn-success" type="submit">Crear receta</button>
+    <button id="but-recipe-create" class="btn btn-success" type="submit">Crear receta</button>
 </form>
 
 

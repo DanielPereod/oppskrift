@@ -30,8 +30,12 @@ Route::group(['prefix'=>'recipe'], function(){
     Route::get('/order/{by}','RecipeController@index')->name('index');
 });
 
-Route::post('/comment/create/{id}','RecipeController@createComment')->name('comment.create');
-
 Route::group(['prefix'=>'user'], function(){
+    Route::get('/profile/favorite', 'UserController@favRecipes')->name('user.favoriteRecipes');
+    Route::get('/profile/favorite/save/{id}', 'UserController@favSave')->name('user.favoriteAdd');
+    Route::get('/profile/favorite/remove/{id}', 'UserController@favRemove')->name('user.favoriteRemove');
     Route::get('/profile/{id}', 'UserController@showProfile')->name('user.profile');
 });
+
+
+Route::post('/comment/create/{id}','RecipeController@createComment')->name('comment.create');

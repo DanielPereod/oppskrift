@@ -40,7 +40,7 @@ function countChar(val) {
 };
 
 /* PREVENIR VARIOS SUBMIT */
-$('button').click(function() {
+$('#but-recipe-create').click(function() {
+    $('#createRecipeForm').submit();
     $(this).attr('disabled',true);
-    $('form').submit();
 });

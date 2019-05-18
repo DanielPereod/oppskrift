@@ -72,6 +72,9 @@
                                 <a class="dropdown-item" href="{{ route('user.profile', ['id' => auth()->user()->id]) }}">
                                     Perfil
                                 </a>
+                                <a class="dropdown-item" href="{{ route('user.favoriteRecipes') }}">
+                                    Favoritos
+                                </a>
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                     Logout
@@ -107,7 +110,7 @@
     <footer class="page-footer font-small blue">
 
         <div class="footer-copyright text-center py-3">© 2018 Copyright:
-          <a href="https://mdbootstrap.com/education/bootstrap/"> Oppskrift</a>
+          <a href="{{url('/')}}"> Oppskrift</a>
         </div>
       
       </footer>
